@@ -1,0 +1,8 @@
+#header-section {
+  height: 300px;
+  overflow: hidden;
+}
+
+#header-section img {
+  margin-top: -100px;
+}

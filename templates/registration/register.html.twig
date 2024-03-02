@@ -1,0 +1,48 @@
+{% extends 'layouts/layout-full-width.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block contentFullWidth %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 mx-auto p-0">
+                {{ form_errors(registrationForm) }}
+            </div>
+            <div class="col-sm-8 mx-auto border shadow-lg">
+                
+                <div class="row">
+                    <div class="col-sm-6 overflow-hidden p-0">
+                        <img src="{{ asset('assets/img/taches.jpg') }}" alt="login" style="margin-left:-10%;">
+                    </div>
+
+                    <div class="col">
+                            
+                        <div class="d-flex flex-column justify-content-center align-items-start h-100 ms-3">
+                            <h1 class="h3 mb-3 font-weight-normal">Inscription</h1>
+                            {{ form_start(registrationForm, {
+                                attr: {
+                                    style: 'width: 100%;',
+                                }
+                            }) }}
+                            {{ form_row(registrationForm.email) }}
+                            {{ form_row(registrationForm.plainPassword, {
+                                label: 'Password'
+                            }) }}
+                            {{ form_row(registrationForm.agreeTerms) }}
+
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
+                            {{ form_end(registrationForm) }}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 mx-auto p-0 mt-5">
+                <p class="text-center">
+                    Déjà inscrit?
+                    <a href="{{ path('app_login') }}" class="text-decoration-none"><span> Connexion.</span></a>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

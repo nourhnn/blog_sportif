@@ -1,0 +1,4 @@
+parameters:
+  app_param_env: "%env(APP_ENV)%"
+  cover_default_img: "https://loremflickr.com/240/240"
+  cover_img_dir: "assets/img/cover_img"
