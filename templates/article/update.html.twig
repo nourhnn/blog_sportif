@@ -16,14 +16,12 @@
 
 {% block contentFullWidth %}
 <div>
-    <h1>Update Form</h1>
-    {{ include('template-parts/general-notifs.html.twig') }}
+    <h1>Article Form</h1>
     {{ form_start(form) }}
     {{ form_errors(form) }}
     <div class="container">
         <div class="row">
             <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
-            </div>
             <div class="col-sm-6 ms-3">
             {{ form_row(form.name) }}
             {{ form_row(form.description) }}
