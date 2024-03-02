@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,7 +19,10 @@ class SecurityController extends AbstractController
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        dd($lastUsername);
+        // dd($lastUsername);
+
+        // $userId = $doctrine->getManager()->getRepository(Article::class)->findAll(); 
+        // dd($userId);
 
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
