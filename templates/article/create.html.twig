@@ -1,12 +1,12 @@
 {% extends 'layouts/layout-full-width.html.twig' %}
 
-{% block title %}Task|Create{% endblock %}
+{% block title %}Article|Create{% endblock %}
 
 
 {% block actionBar %}
 <div class="container mb-4">
     <div class="structural-row-center-end">
-        <a href="{{ path('app_task') }}">
+        <a href="{{ path('app_article') }}">
             <button class="btn btn-lg btn-outline-info">LISTE</button>
         </a>
     </div>
@@ -16,8 +16,7 @@
 
 {% block contentFullWidth %}
 <div>
-    <h1>Update Form</h1>
-    {{ include('template-parts/general-notifs.html.twig') }}
+    <h1>Article Form</h1>
     {{ form_start(form) }}
     {{ form_errors(form) }}
     <div class="container">

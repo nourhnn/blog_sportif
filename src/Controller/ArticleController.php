@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Task;
-use App\Form\TaskType;
-use App\Service\Task\TaskService;
+use App\Entity\Article;
+use App\Form\ArticleType;
+use App\Service\Article\ArticleService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -14,39 +14,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class TaskController extends AbstractController
+class ArticleController extends AbstractController
 {
-    #[Route('/', name: 'app_task')]
-    public function index(TaskService $service): Response
+    #[Route('/', name: 'app_article')]
+    public function index(ArticleService $service): Response
     {
-        // dd($service->getAllTasks());
+        // dd($service->getAllArticles());
 
-        return $this->render('task/index.html.twig', [
-            'tasks' => $service->getAllTasks(),
+        return $this->render('article/index.html.twig', [
+            'articles' => $service->getAllArticles(),
             'defaultImg' => $this->getParameter('cover_default_img'),
         ]);
     }
 
-    #[Route('/task/create', name: 'app_task_create')]
-    public function createTask(Request $request, SluggerInterface $slugger, ManagerRegistry $doctrine): Response
+    #[Route('/article/create', name: 'app_article_create')]
+    public function createArticle(Request $request, SluggerInterface $slugger, ManagerRegistry $doctrine): Response
     {
-        $task = new Task();
+        $article = new Article();
         // on charge l'objet avec une dueDate:
-        $task->setDueDate(new \DateTime('now'));
+        $article->setDueDate(new \DateTime('now'));
 
         // on charge l'objet avec une image
-        $task->setCover($this->getParameter('cover_default_img'));
+        $article->setCover($this->getParameter('cover_default_img'));
 
 
-        $form = $this->createForm(TaskType::class, $task, [
+        $form = $this->createForm(ArticleType::class, $article, [
             'method' => 'POST'
         ]);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            // on met a jour l'objet $task avec les données du formulaire
-            $task = $form->getData();
+            // on met a jour l'objet $article avec les données du formulaire
+            $article = $form->getData();
 
             // on vérifie si le formulaire retourne une image
             // dans $_FILE
@@ -69,42 +69,42 @@ class TaskController extends AbstractController
                     $this->addFlash('error', 'Une erreur est survenue: '. $e->getMessage());
                 }
 
-                $task->setCover($newFileName);
+                $article->setCover($newFileName);
             }
 
-            $doctrine->getManager()->persist($task);
+            $doctrine->getManager()->persist($article);
             $doctrine->getManager()->flush();
 
             $this->addFlash('success', 'Nouvelle tâche ajoutée avec succès.');
-            return $this->redirectToRoute('app_task');
+            return $this->redirectToRoute('app_article');
 
         }
-        return $this->render('task/create.html.twig', [
+        return $this->render('article/create.html.twig', [
             'form' => $form,
-            'img' => $task->getCover(),
+            'img' => $article->getCover(),
         ]);
     }
 
-    #[Route('/task/delete/{id}', name: 'app_task_delete')]
-    public function deleteTask(int $id, TaskService $service): RedirectResponse {
-        if($service->deleteOneTask($id)) {
+    #[Route('/article/delete/{id}', name: 'app_article_delete')]
+    public function deleteArticle(int $id, ArticleService $service): RedirectResponse {
+        if($service->deleteOneArticle($id)) {
             $this->addFlash('success', 'Tâche supprimée avec succès.');
         } else {
             $this->addFlash('error', 'Une erreur est survenue.');
         }
 
-        return $this->redirectToRoute('app_task');
+        return $this->redirectToRoute('app_article');
     }
 
-    #[Route('/task/update/{id}', name: 'app_task_update')]
-    public function updateTask(int $id, Request $request, SluggerInterface $slugger, ManagerRegistry $doctrine, TaskService $service): Response {
-        $task = $service->getOneTask($id);
+    #[Route('/article/update/{id}', name: 'app_article_update')]
+    public function updateArticle(int $id, Request $request, SluggerInterface $slugger, ManagerRegistry $doctrine, ArticleService $service): Response {
+        $article = $service->getOneArticle($id);
     
         // Sauvegarde de l'ancienne photo pour suppression ultérieure
-        $oldPhotoPath = $task->getCover();
+        $oldPhotoPath = $article->getCover();
     
         // Créer le formulaire de mise à jour et le traiter
-        $form = $this->createForm(TaskType::class, $task, [
+        $form = $this->createForm(ArticleType::class, $article, [
             'method' => 'POST'
         ]);
     
@@ -112,7 +112,7 @@ class TaskController extends AbstractController
     
         if($form->isSubmitted() && $form->isValid()) {
             // Récupérer les données du formulaire
-            $task = $form->getData();
+            $article = $form->getData();
     
             // Vérifier si le formulaire contient une nouvelle image
             $photoFile = $form->get('cover')->getData();
@@ -131,7 +131,7 @@ class TaskController extends AbstractController
                     );
     
                     // Mettre à jour le nom de fichier dans la tâche
-                    $task->setCover($newFileName);
+                    $article->setCover($newFileName);
     
                     // Supprimer l'ancienne photo
                     if($oldPhotoPath) {
@@ -147,16 +147,16 @@ class TaskController extends AbstractController
     
             // Enregistrer les modifications de la tâche dans la base de données
             $entityManager = $doctrine->getManager();
-            $entityManager->persist($task);
+            $entityManager->persist($article);
             $entityManager->flush();
     
             $this->addFlash('success', 'Tâche modifiée avec succès.');
-            return $this->redirectToRoute('app_task');
+            return $this->redirectToRoute('app_article');
         }
     
-        return $this->render('task/update.html.twig', [
+        return $this->render('article/update.html.twig', [
             'form' => $form->createView(),
-            'img' => $task->getCover(),
+            'img' => $article->getCover(),
         ]);
     }    
 
