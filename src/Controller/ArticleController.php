@@ -15,4 +15,12 @@ class ArticleController extends AbstractController
             'controller_name' => 'ArticleController',
         ]);
     }
+
+    #[Route('/article/create', name: 'app_article_create')]
+    public function articleCreate(): Response
+    {
+        return $this->render('article/create.html.twig', [
+            'controller_name' => 'ArticleController',
+        ]);
+    }
 }
