@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Service\User;
+
 use App\Entity\Article;
 use Doctrine\Persistence\ManagerRegistry;
 
