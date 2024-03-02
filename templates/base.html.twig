@@ -34,7 +34,7 @@
 		{% block subnav %}
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
     		<div class="d-flex flex-row justify-content-end pe-3">
-					<a href="{{ path('app_article') }}" class="btn btn-outline-secondary ms-3">Accueil</a>
+					<a href="{{ path('app_home') }}" class="btn btn-outline-secondary ms-3">Accueil</a>
 					<a href="{{ path('app_logout') }}" class="btn btn-outline-secondary ms-3">Déconnexion</a>
 				</div>
 			{% else %}

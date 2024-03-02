@@ -22,18 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
-                <div class="d-flex flex-column justify-content-center align-items-center">
-                    {{ form_label(form.cover) }}
-
-                    <img class="mb-3 rounded-circle" src="https://loremflickr.com/240/240" alt="cover" width="240px" height="240px">
-
-                    {{ form_errors(form.cover) }}
-                    {{ form_widget(form.cover) }}
-                    {{ form_help(form.cover) }}
-                </div>
-            </div>
             <div class="col-sm-6 ms-3">
-            {{ form_row(form.dueDate) }}
             {{ form_row(form.name) }}
             {{ form_row(form.description) }}
 

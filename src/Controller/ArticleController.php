@@ -16,7 +16,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ArticleController extends AbstractController
 {
-    #[Route('/', name: 'app_article')]
+    #[Route('/article', name: 'app_article')]
     public function index(ArticleService $service): Response
     {
         // dd($service->getAllArticles());
@@ -31,12 +31,6 @@ class ArticleController extends AbstractController
     public function createArticle(Request $request, SluggerInterface $slugger, ManagerRegistry $doctrine): Response
     {
         $article = new Article();
-        // on charge l'objet avec une dueDate:
-        $article->setDueDate(new \DateTime('now'));
-
-        // on charge l'objet avec une image
-        $article->setCover($this->getParameter('cover_default_img'));
-
 
         $form = $this->createForm(ArticleType::class, $article, [
             'method' => 'POST'
@@ -48,30 +42,6 @@ class ArticleController extends AbstractController
             // on met a jour l'objet $article avec les données du formulaire
             $article = $form->getData();
 
-            // on vérifie si le formulaire retourne une image
-            // dans $_FILE
-            $photoFile = $form->get('cover')->getData();
-
-            // si il y a une image:
-            if($photoFile) {
-                $originalFileName = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-
-                $safeFileName = $slugger->slug($originalFileName);
-
-                $newFileName = $safeFileName . '-' . uniqid() . '.' . $photoFile->guessExtension();
-
-                try {
-                    $photoFile->move(
-                        $this->getParameter('cover_img_dir'),
-                        $newFileName
-                    );
-                } catch(FileException $e) {
-                    $this->addFlash('error', 'Une erreur est survenue: '. $e->getMessage());
-                }
-
-                $article->setCover($newFileName);
-            }
-
             $doctrine->getManager()->persist($article);
             $doctrine->getManager()->flush();
 
@@ -81,7 +51,6 @@ class ArticleController extends AbstractController
         }
         return $this->render('article/create.html.twig', [
             'form' => $form,
-            'img' => $article->getCover(),
         ]);
     }
 
@@ -114,37 +83,6 @@ class ArticleController extends AbstractController
             // Récupérer les données du formulaire
             $article = $form->getData();
     
-            // Vérifier si le formulaire contient une nouvelle image
-            $photoFile = $form->get('cover')->getData();
-    
-            if($photoFile) {
-                // Générer un nouveau nom de fichier sécurisé
-                $originalFileName = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFileName = $slugger->slug($originalFileName);
-                $newFileName = $safeFileName . '-' . uniqid() . '.' . $photoFile->guessExtension();
-    
-                try {
-                    // Déplacer la nouvelle image vers le dossier cover_img
-                    $photoFile->move(
-                        $this->getParameter('cover_img_dir'),
-                        $newFileName
-                    );
-    
-                    // Mettre à jour le nom de fichier dans la tâche
-                    $article->setCover($newFileName);
-    
-                    // Supprimer l'ancienne photo
-                    if($oldPhotoPath) {
-                        $oldPhotoFullPath = $this->getParameter('cover_img_dir') . '/' . $oldPhotoPath;
-                        if(file_exists($oldPhotoFullPath)) {
-                            unlink($oldPhotoFullPath);
-                        }
-                    }
-                } catch(FileException $e) {
-                    $this->addFlash('error', 'Une erreur est survenue lors du téléchargement de la photo: '. $e->getMessage());
-                }
-            }
-    
             // Enregistrer les modifications de la tâche dans la base de données
             $entityManager = $doctrine->getManager();
             $entityManager->persist($article);
@@ -156,7 +94,6 @@ class ArticleController extends AbstractController
     
         return $this->render('article/update.html.twig', [
             'form' => $form->createView(),
-            'img' => $article->getCover(),
         ]);
     }    
 

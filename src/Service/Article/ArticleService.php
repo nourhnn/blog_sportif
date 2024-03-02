@@ -19,7 +19,7 @@ class ArticleService
      * @return Article[] return an array of Article objects
      */
     public function getAllArticles(): array {
-        return $this->doctrine->getManager()->getRepository(Article::class)->findBy([], ['dueDate' => 'ASC']);
+        return $this->doctrine->getManager()->getRepository(Article::class)->findAll();
     }
 
     public function deleteOneArticle(int $id): bool {
