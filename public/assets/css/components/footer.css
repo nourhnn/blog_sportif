@@ -35,16 +35,42 @@
 .footer-menu li {
     display: inline-block;
     margin-right: 20px;
+    font-size: 16px;
+    padding: 15px;
 }
   
 .footer-menu li:last-child {
     margin-right: 0;
+    padding: 5px;
 }
   
 .footer-menu a {
+    font-size: 13px;
     color: #fff;
+    text-transform: uppercase;
     text-decoration: none;
+    letter-spacing: 0.15em;
+    
+    display: inline-block;
+    position: relative;
 }
+.footer-menu a:after {    
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: #fff;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+  }
+  
+  .footer-menu a:hover:after { 
+    width: 100%; 
+    left: 0; 
+  }
   
 
   

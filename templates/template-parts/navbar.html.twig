@@ -9,13 +9,13 @@
         		{% block subnav %}
 			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
     		<div class="d-flex flex-row justify-content-end pe-3">
-					<a href="{{ path('app_home') }}" class="btn btn-outline-light ms-3">Accueil</a>
-					<a href="{{ path('app_logout') }}" class="btn btn-outline-light ms-3">Déconnexion</a>
+					<a href="{{ path('app_home') }}" class="connect btn btn-outline-light ms-3">Accueil</a>
+					<a href="{{ path('app_logout') }}" class="connect btn btn-outline-light ms-3">Déconnexion</a>
 				</div>
 			{% else %}
 				<div class="d-flex flex-row justify-content-end pe-3">
-					<a href="{{ path('app_login') }}" class="btn btn-outline-light ms-3">Connexion</a>
-					<a href="{{ path('app_register') }}" class="btn btn-outline-light ms-3">Inscription</a>
+					<a href="{{ path('app_login') }}" class="connect btn btn-outline-light ms-3">Connexion</a>
+					<a href="{{ path('app_register') }}" class="connect btn btn-outline-light ms-3">Inscription</a>
 				</div>
 			{% endif %}
 		{% endblock %}

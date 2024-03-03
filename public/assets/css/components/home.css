@@ -23,7 +23,9 @@
     padding: 20px 0;
     text-align: center; 
     white-space: nowrap;
-    font-size: 16px;
+    p{
+    font-size: 20px;
+    }
 }
 .endtitles {
     color: #fff;
@@ -35,14 +37,24 @@
 
 .btn-go{
     display: flex;
+    padding: 30px;
+    gap: 50px;
     justify-content: center;
     align-items: center;
-    gap: 50px;
-    padding: 30px;
+
+}
+
+.btn-article, .btn-create{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    
+    
     
 }
 
-.btn-go button {
+.btn-article, .btn-create  {
+    
     width: 15rem;
     height: 5rem;
     border-radius: 15px;
@@ -54,6 +66,10 @@
         color: #000;
         transition: 0.8s linear;
         cursor: pointer;
+    }
+    a{
+        text-decoration: none;
+        color: #000;
     }
 }
 

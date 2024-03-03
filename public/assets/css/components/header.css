@@ -26,14 +26,37 @@ nav {
         margin: 4px;
       }
     }
-    a {
-        text-decoration: none;
-        color: #000;
-        transition: 0.8s linear;
-        &:hover {
-            color: #fff;
+        a {
+          font-size: 22px;
+          left: 50px;
+          color: #000;
+          transition: 0.6s linear;
+          text-transform: uppercase;
+          text-decoration: none;
+          letter-spacing: 0.15em;
           
+          display: inline-block;
+          position: relative;
+          &:hover {
+            color: #fff;
           }
+      }
+   a:after {    
+          background: none repeat scroll 0 0 transparent;
+          bottom: 0;
+          content: "";
+          display: block;
+          height: 2px;
+          left: 50%;
+          position: absolute;
+          background: #fff;
+          transition: width 0.3s ease 0s, left 0.3s ease 0s;
+          width: 0;
+        }
+        
+    a:hover:after { 
+          width: 100%; 
+          left: 0; 
         }
     .links-container {
       
@@ -54,6 +77,15 @@ nav {
        
       }
     }
+  }
+
+  .connect{
+    color: #fff;
+          transition: 0.8s linear;
+          &:hover{
+            background-color: #fff;
+            color: #000;
+          }
   }
 
   @media (max-width: 750px) {
