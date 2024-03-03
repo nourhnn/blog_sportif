@@ -15,12 +15,12 @@
 {% block contentFullWidth %}
 <div>
     <h1>Article Form</h1>
-{{ form_start(print_article) }}
+{{ form_start(print_article, {'attr': {'novalidate': ''}}) }}
 
     {{ form_errors(print_article) }}
     {{ form_row(print_article.name) }}
     {{ form_row(print_article.description) }}
-    {# {{ form_widget(print_article._token) }} #}
+    {{ form_widget(print_article._token) }}
 
 {{ form_end(print_article) }}
 
@@ -30,7 +30,7 @@
         </div>
     </div>
     {# {{ form_end(form) }} #}
-    {{ form_end(print_article) }}
+    {# {{ form_end(print_article) }} #}
 
 </div>
 {% endblock %}
