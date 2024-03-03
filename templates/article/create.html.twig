@@ -17,20 +17,15 @@
 {% block contentFullWidth %}
 <div>
     <h1>Article Form</h1>
+    {{ form_start(print_article) }}
     {{ form_errors(print_article) }}
     {{ form_row(print_article.name) }}
     {{ form_row(print_article.description) }}
-    {# {{ form_start(form) }} #}
-    {# {{ form_errors(form) }} #}
+    {# {{ print_article.ref = userId }} #}
+
     <div class="container">
         <div class="row">
             <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
-            <div class="col-sm-6 ms-3">
-            {# {{ form_row(form.name) }} #}
-            {# {{ form_row(form.description) }} #}
-
-            {# {{ form_row(form.Enregistrer) }} #}
-            </div>
         </div>
     </div>
     {# {{ form_end(form) }} #}

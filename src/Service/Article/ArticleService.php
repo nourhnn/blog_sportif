@@ -37,5 +37,5 @@ class ArticleService
     public function getOneArticle(int $id){
         return $this->doctrine->getManager()->getRepository(Article::class)->findOneBy(['id' => $id]);
     }
-    
+
 }
