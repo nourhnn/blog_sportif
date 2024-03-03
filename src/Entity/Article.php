@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Html2Text\Html2Text;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -61,5 +62,11 @@ class Article
         $this->ref = $ref;
 
         return $this;
+    }
+    
+    public function getDescriptionPlainText(): string
+    {
+        $html2text = new Html2Text($this->description);
+        return $html2text->getText();
     }
 }
