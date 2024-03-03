@@ -39,6 +39,7 @@ class ArticleType extends AbstractType
                 'required' => true,
                 'label'=> 'Description:',
                 'help'=> 'le nom de la description',
+                'attr' => ['class' => 'mytextarea'],
                 'constraints'=>[
                     new Assert\NotBlank([
                         'message' => 'La description de l\'article est obligatoire'

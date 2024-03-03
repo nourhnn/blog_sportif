@@ -40,7 +40,7 @@ class ArticleController extends AbstractController
         if ($user !== null) {
             $userId = $user->getId();
         }
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             // on met a jour l'objet $task avec les données du formulaire
             $article = $form->getData();

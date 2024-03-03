@@ -4,7 +4,6 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 		<title>
 			{% block title %}{% endblock %}
 		</title>
@@ -22,6 +21,22 @@
 
 		{# custom css #}
 		<link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/tinymce@5/tinymce.min.js"></script>
+
+		{# <script src="/path/or/uri/to/tinymce.min.js" referrerpolicy="origin"></script> #}
+		    {# <script>
+      tinymce.init({
+        selector: '#mytextarea'
+      });
+    </script> #}
+	<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        tinymce.init({
+            selector: "#article_description", // Assurez-vous que le sélecteur correspond à votre textarea
+            // Ajoutez d'autres options selon vos besoins
+        });
+    });
+</script>
 
 	</head>
 	<body

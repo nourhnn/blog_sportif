@@ -2,7 +2,6 @@
 
 {% block title %}Article|Create{% endblock %}
 
-
 {% block actionBar %}
 <div class="container mb-4">
     <div class="structural-row-center-end">
@@ -13,11 +12,11 @@
   </div> 
 {% endblock %}
 
-
 {% block contentFullWidth %}
 <div>
     <h1>Article Form</h1>
     {{ form_start(print_article) }}
+    
     {{ form_errors(print_article) }}
     {{ form_row(print_article.name) }}
     {{ form_row(print_article.description) }}
