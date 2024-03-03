@@ -58,3 +58,32 @@
 }
 
 
+@media screen and (max-width: 768px) {
+    .home {
+        width: 100%;
+        height: auto;
+    }
+
+    .btn-go {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .btn-go button {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .title h5 {
+        font-size: 16px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    .endtitles {
+        font-size: 16px;
+    }
+}

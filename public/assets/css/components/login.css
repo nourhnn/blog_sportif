@@ -108,3 +108,27 @@
     color: #568b8c;
   }
   
+  /* Tablet */
+@media (max-width: 768px) {
+  .wrapper {
+    width: 80%;
+    padding: 20px;
+  }
+}
+
+/* Phone */
+@media (max-width: 480px) {
+  .wrapper {
+    width: 90%;
+    padding: 15px;
+  }
+  .wrapper h1 {
+    font-size: 28px;
+  }
+  .input-box input {
+    font-size: 14px;
+  }
+  .input-box i {
+    font-size: 16px;
+  }
+}

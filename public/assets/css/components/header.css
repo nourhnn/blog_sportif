@@ -56,27 +56,28 @@ nav {
     }
   }
 
-@media (max-width: 750px) {
-  body {
-    nav {
-      height: 5rem;
-      justify-content: flex-end;
-      .brand-name {
-        display: none;
-      }
-      .hamburger {
-        display: flex;
-        margin: 0.5rem;
-      }
-      .links-container {
-        display: none;
-        &.active {
+  @media (max-width: 750px) {
+    body {
+      nav {
+        height: 5rem;
+        justify-content: flex-end;
+        .brand-name {
+          display: none;
+        }
+        .hamburger {
           display: flex;
-          width: 100%;
-          justify-content: center;
-          flex-direction: column;
+          margin: 0.5rem;
+        }
+        .links-container {
+          display: none;
+          &.active {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            flex-direction: column;
+          }
         }
       }
     }
   }
-}
+  
