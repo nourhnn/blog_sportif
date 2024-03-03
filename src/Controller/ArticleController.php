@@ -10,16 +10,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
+use Doctrine\ORM\EntityManagerInterface;
 
 class ArticleController extends AbstractController
 {
-    #[Route('/article', name: 'app_article')]
-    public function index(): Response
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        return $this->render('article/index.html.twig', [
-            'controller_name' => 'ArticleController',
-        ]);
+        $this->entityManager = $entityManager;
     }
 
     #[Route('/article/create', name: 'app_article_create')]
@@ -28,8 +27,7 @@ class ArticleController extends AbstractController
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
-
-    
+        
         $lastUsername = $authenticationUtils->getLastUsername();
         
         $userService->getAllUserElement($lastUsername);
@@ -38,9 +36,10 @@ class ArticleController extends AbstractController
         if ($user !== null) {
             $userId = $user->getId();
         }
-        // dd($userId);
+    
+    
         return $this->render('article/create.html.twig', [
-            'print_article' => $form,
+            'print_article' => $form->createView(),
         ]);
     }
 }

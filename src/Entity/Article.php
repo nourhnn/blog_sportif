@@ -19,6 +19,9 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[ORM\Column]
+    private ?int $ref = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +47,18 @@ class Article
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getRef(): ?int
+    {
+        return $this->ref;
+    }
+
+    public function setRef(int $ref): static
+    {
+        $this->ref = $ref;
 
         return $this;
     }
