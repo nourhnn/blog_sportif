@@ -42,7 +42,7 @@ class ArticleController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // on met a jour l'objet $task avec les données du formulaire
+            // on met a jour l'objet $article avec les données du formulaire
             $article = $form->getData();
             // Mettre l'ID de l'utilisateur dans le champ ref de la table article
             $article->setRef($userId);
@@ -68,4 +68,26 @@ class ArticleController extends AbstractController
         }
         return $this->redirectToRoute('app_article');
     }
+    #[Route('/article/update/{id}', name: 'app_article_update')]
+
+    public function updatearticle(int $id, ArticleService $articleService, Request $request, ManagerRegistry $doctrine): Response
+    {
+        $article = $articleService->getOnearticle($id);
+    
+        $form = $this->createForm(ArticleType::class, $article, ['method' => 'POST']);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+    
+            $entityManager = $doctrine->getManager();
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'La tâche a été modifiée avec succès.');
+        }
+    
+        return $this->render('article/update.html.twig', [
+            'form' => $form->createView(),
+            'article' => $article,
+        ]);
+    }    
 }
