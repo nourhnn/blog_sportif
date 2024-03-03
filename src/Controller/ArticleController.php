@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Form\ArticleType;
+use App\Service\Article\ArticleService;
 use App\Service\User\UserService;
 use Doctrine\Persistence\ManagerRegistry;
 // use Symfony\Bridge\Doctrine\ManagerRegistry;
@@ -17,13 +18,14 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ArticleController extends AbstractController
 {
     #[Route('/article', name: 'app_article')]
-    public function index(): Response
+    public function index(ArticleService $articleService): Response
     {
+        $articles = $articleService->getAllArticles();
         return $this->render('article/index.html.twig', [
-            'controller_name' => 'ArticleController',
+            'articles' => $articles,
         ]);
     }
-
+    
     #[Route('/article/create', name: 'app_article_create')]
     public function articleCreate(Request $request, AuthenticationUtils $authenticationUtils, UserService $userService, ManagerRegistry $doctrine): Response
     {
