@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Html2Text\Html2Text;
-
+// lpp
 class ArticleController extends AbstractController
 {
     #[Route('/article', name: 'app_article')]
