@@ -47,7 +47,7 @@ class ArticleType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('Enregister', SubmitType::class)
+            ->add('Enregistrer', SubmitType::class)
         ;
     }
 
