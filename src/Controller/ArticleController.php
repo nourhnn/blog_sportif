@@ -40,17 +40,20 @@ class ArticleController extends AbstractController
         if ($user !== null) {
             $userId = $user->getId();
         }
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             // on met a jour l'objet $task avec les données du formulaire
             $article = $form->getData();
-            // dd($article);
-            //mettre l'id de l'user dans le champs ref de la table article
+            // Mettre l'ID de l'utilisateur dans le champ ref de la table article
+            $article->setRef($userId);
+            // Persistez l'article dans la base de données
             $doctrine->getManager()->persist($article);
             $doctrine->getManager()->flush();
-
+        
             $this->addFlash('success', 'article envoyé avec succés.');
         }
+        
+
         // dd($userId);
         return $this->render('article/create.html.twig', [
             'print_article' => $form,

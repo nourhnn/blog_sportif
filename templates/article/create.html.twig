@@ -15,12 +15,14 @@
 {% block contentFullWidth %}
 <div>
     <h1>Article Form</h1>
-    {{ form_start(print_article) }}
-    
+{{ form_start(print_article) }}
+
     {{ form_errors(print_article) }}
     {{ form_row(print_article.name) }}
     {{ form_row(print_article.description) }}
-    {# {{ print_article.ref = userId }} #}
+    {{ form_widget(print_article._token) }}
+
+{{ form_end(print_article) }}
 
     <div class="container">
         <div class="row">
