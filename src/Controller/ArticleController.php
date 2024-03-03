@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Form\ArticleType;
 use App\Service\User\UserService;
+use Doctrine\Persistence\ManagerRegistry;
+// use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +25,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/create', name: 'app_article_create')]
-    public function articleCreate(Request $request, AuthenticationUtils $authenticationUtils, UserService $userService): Response
+    public function articleCreate(Request $request, AuthenticationUtils $authenticationUtils, UserService $userService, ManagerRegistry $doctrine): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
@@ -37,6 +39,17 @@ class ArticleController extends AbstractController
         $userId = null;
         if ($user !== null) {
             $userId = $user->getId();
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // on met a jour l'objet $task avec les données du formulaire
+            $article = $form->getData();
+            // dd($article);
+            //mettre l'id de l'user dans le champs ref de la table article
+            $doctrine->getManager()->persist($article);
+            $doctrine->getManager()->flush();
+
+            $this->addFlash('success', 'article envoyé avec succés.');
         }
         // dd($userId);
         return $this->render('article/create.html.twig', [
