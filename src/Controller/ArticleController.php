@@ -30,7 +30,7 @@ class ArticleController extends AbstractController
         if ($user !== null) {
             $userId = $user->getId();
         }
-        dd($userId);
+        // dd($userId);
         return $this->render('article/create.html.twig', [
             'controller_name' => 'ArticleController',
         ]);
