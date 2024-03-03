@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Article;
@@ -7,13 +6,12 @@ use App\Form\ArticleType;
 use App\Service\Article\ArticleService;
 use App\Service\User\UserService;
 use Doctrine\Persistence\ManagerRegistry;
-// use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ArticleController extends AbstractController
 {
@@ -55,10 +53,19 @@ class ArticleController extends AbstractController
             $this->addFlash('success', 'article envoyé avec succés.');
         }
         
-
-        // dd($userId);
         return $this->render('article/create.html.twig', [
             'print_article' => $form,
         ]);
+    }
+
+    #[Route('/article/delete/{id}', name: 'app_article_delete')]
+    public function deleteArticle(int $id, ArticleService $articleService): RedirectResponse
+    {
+        if ($articleService->deleteOneArticle($id)) {
+            $this->addFlash('success', 'L\'article a été supprimé.');
+        } else {
+            $this->addFlash('error', 'Une erreur est survenue lors de la suppression de l\'article.');
+        }
+        return $this->redirectToRoute('app_article');
     }
 }
