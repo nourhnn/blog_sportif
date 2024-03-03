@@ -20,6 +20,7 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/article/create', name: 'app_article_create')]
+
     public function articleCreate(AuthenticationUtils $authenticationUtils, UserService $userService): Response
     {
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -31,6 +32,7 @@ class ArticleController extends AbstractController
             $userId = $user->getId();
         }
         // dd($userId);
+
         return $this->render('article/create.html.twig', [
             'controller_name' => 'ArticleController',
         ]);
