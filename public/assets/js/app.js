@@ -14,3 +14,11 @@ function ready(callback) {
 ready(function () {
   // votre code JS ici....
 });
+
+
+const hamburger = document.querySelector('.hamburger')
+const linksContainer = document.querySelector('.links-container')
+
+hamburger.addEventListener('click', ()=> {
+  linksContainer.classList.toggle('active')
+})

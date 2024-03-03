@@ -1,0 +1,60 @@
+.home {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60rem;
+    height: 30rem;
+    border-radius: 15px;
+    background: rgb(195, 120, 33);
+    background: linear-gradient(180deg, rgba(195, 120, 33, 1) 0%, rgba(221, 101, 21, 1) 50%, rgba(171, 0, 21, 1) 100%);
+}
+
+
+.title{
+    padding: 20px;
+    text-align: center; 
+    white-space: nowrap;
+    h5{
+        padding: 10px;
+    }
+}
+.subtitle{
+    padding: 20px 0;
+    text-align: center; 
+    white-space: nowrap;
+    font-size: 16px;
+}
+.endtitles {
+    color: #fff;
+    text-align: center; 
+    white-space: nowrap;
+    font-size: 18px;
+    padding: 20px 0;
+}
+
+.btn-go{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 30px;
+    
+}
+
+.btn-go button {
+    width: 15rem;
+    height: 5rem;
+    border-radius: 15px;
+    background: #ffffff93;
+    border: none;
+    transition: 0.8s linear;
+    &:hover{
+        background-color: #fff;
+        color: #000;
+        transition: 0.8s linear;
+        cursor: pointer;
+    }
+}
+
+

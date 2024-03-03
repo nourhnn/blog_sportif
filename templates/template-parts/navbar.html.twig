@@ -1,3 +1,29 @@
 <header id="header-section" class="structural-col mb-4">
-    <img class="img-fluid" src="{{ asset('/assets/img/header-img.jpg') }}" alt="header image" width="100%">
+   <nav>
+        <a href="{{ path('app_home') }}" class="brand-name"><img src="{{ asset('/assets/img/logo_blog.webp') }}" width="100"></a>
+        <ul class="links-container">
+          <li class="link"><a href="{{ path('app_home') }}">Accueil</a></li>
+          <li class="link"><a href="{{ path('app_article') }}">Articles</a></li>
+          <li class="link"><a href="{{ path('app_article_create') }}">Publication</a></li>
+        </ul>
+        		{% block subnav %}
+			{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    		<div class="d-flex flex-row justify-content-end pe-3">
+					<a href="{{ path('app_home') }}" class="btn btn-outline-light ms-3">Accueil</a>
+					<a href="{{ path('app_logout') }}" class="btn btn-outline-light ms-3">Déconnexion</a>
+				</div>
+			{% else %}
+				<div class="d-flex flex-row justify-content-end pe-3">
+					<a href="{{ path('app_login') }}" class="btn btn-outline-light ms-3">Connexion</a>
+					<a href="{{ path('app_register') }}" class="btn btn-outline-light ms-3">Inscription</a>
+				</div>
+			{% endif %}
+		{% endblock %}
+        <div class="hamburger">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+        </div>
+    </nav>
 </header>
+    
