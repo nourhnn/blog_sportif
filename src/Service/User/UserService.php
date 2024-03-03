@@ -2,7 +2,6 @@
 
 namespace App\Service\User;
 
-use App\Entity\Article;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -15,6 +14,6 @@ class UserService {
 
     public function getAllUserElement($email) {
 
-        return $this->doctrine->getManager()->getRepository(User::class)->findBy(['email'=> $email],[]); 
+        return $this->doctrine->getManager()->getRepository(User::class)->findOneBy(['email'=>$email]); 
     }
 }
