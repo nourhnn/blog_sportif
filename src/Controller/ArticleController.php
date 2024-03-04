@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Html2Text\Html2Text;
 // lpp
 class ArticleController extends AbstractController
 {
@@ -41,7 +40,6 @@ class ArticleController extends AbstractController
         if ($user !== null) {
             $userId = $user->getId();
         }
-        $descriptionPlainText = ''; // Définition de la variable en dehors de la condition
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Récupérer les données du formulaire
@@ -49,17 +47,6 @@ class ArticleController extends AbstractController
             $article->articleId($userId, $doctrine); 
             
             // Récupérer la description de l'article du formulaire
-            $description = $article->getDescription();
-            
-            // Convertir la description HTML en texte brut
-            $html2text = new Html2Text($description);
-            
-            $plainTextDescription = $html2text->getText();
-            
-            // Mettre à jour la description de l'article avec le texte brut
-            $article->setDescription($plainTextDescription);
-        
-            // Mettre l'ID de l'utilisateur dans le champ ref de la table article
             $article->setRef($userId);
         
             // Persistez l'article dans la base de données
@@ -67,15 +54,11 @@ class ArticleController extends AbstractController
             $entityManager->persist($article);
             $entityManager->flush();
         
-            // Définir la variable $descriptionPlainText pour la passer au modèle Twig
-            $descriptionPlainText = $plainTextDescription;
-        
             $this->addFlash('success', 'article envoyé avec succès.');
         }
         
         return $this->render('article/create.html.twig', [
             'print_article' => $form,
-            'descriptionPlainText' => $descriptionPlainText,
         ]);
     }
     #[Route('/article/delete/{id}', name: 'app_article_delete')]

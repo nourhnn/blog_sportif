@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Html2Text\Html2Text;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Doctrine\DBAL\Types\Types;
 
@@ -68,11 +67,6 @@ class Article
         return $this;
     }
     
-    public function getDescriptionPlainText(): string
-    {
-        $html2text = new Html2Text($this->description);
-        return $html2text->getText();
-    }
     public function articleId(int $id, ManagerRegistry $doctrine)
     {
         $entityManager = $doctrine->getManager();
