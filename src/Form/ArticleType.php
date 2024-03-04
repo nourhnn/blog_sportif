@@ -20,11 +20,12 @@ class ArticleType extends AbstractType
         $builder
             ->add('name', TextType::class,[
                 'required' => true,
-                'label'=> 'Name:',
-                'help'=> 'le nom de l\'article',
+                'label'=> 'Titre de l\'article:',
+                'attr' => ['placeholder' => 'Ecrivez le titre de l\'article',
+                'constraints'],
                 'constraints'=>[
                     new Assert\NotBlank([
-                        'message' => 'Le titre de l\'article est obligatoire'
+                        'message' => 'Le titre de l\'article est obligatoire',
                     ]),
                     new Assert\Type("string"),
                     new Assert\Length([
@@ -38,7 +39,6 @@ class ArticleType extends AbstractType
             ->add('description', TextType::class,[
                 'required' => true,
                 'label'=> 'Description:',
-                'help'=> 'le nom de la description',
                 'attr' => ['class' => 'mytextarea'],
                 'constraints'=>[
                     new Assert\NotBlank([
@@ -52,7 +52,9 @@ class ArticleType extends AbstractType
                 ],
             ])
             // ->add('ref',IntegerType::class)
-            ->add('Enregistrer', SubmitType::class)
+            ->add('Publier', SubmitType::class,[
+                'attr' => ['class' => 'push'],
+            ])
         ;
     }
 

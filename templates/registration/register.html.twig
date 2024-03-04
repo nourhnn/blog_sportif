@@ -10,11 +10,14 @@
             {{ form_errors(registrationForm) }}
 
             {{ form_start(registrationForm) }}
+            <div class="sign-box">
                 {{ form_row(registrationForm.email) }}
+            </div>
+            <div class="sign-box">
                 {{ form_row(registrationForm.plainPassword, {
                     label: 'Password'
                 }) }}
-                {{ form_row(registrationForm.agreeTerms) }}
+            </div>
 
                 <button type="submit" class="btn-login">S'inscrire</button>
             {{ form_end(registrationForm) }}

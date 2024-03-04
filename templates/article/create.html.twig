@@ -1,29 +1,31 @@
 {% extends 'layouts/layout-full-width.html.twig' %}
 
-{% block title %}Article|Create{% endblock %}
+{% block title %}Article|Publication{% endblock %}
 
 {% block actionBar %}
 <div class="container mb-4">
-    <div class="structural-row-center-end">
-        <a href="{{ path('app_article') }}">
-            <button class="btn btn-lg btn-outline-info">ARTICLES</button>
-        </a>
-    </div>
+
   </div> 
 {% endblock %}
 
 {% block contentFullWidth %}
-<div>
-    <h1>Article Form</h1>
+<div class="create">
+    <div class="wrapper-create">
+    <h1>Rédigez votre article</h1>
 {{ form_start(print_article, {'attr': {'novalidate': ''}}) }}
 
     {{ form_errors(print_article) }}
-    {{ form_row(print_article.name) }}
-    {{ form_row(print_article.description) }}
+    <div class="title-box">
+        {{ form_row(print_article.name) }}
+    </div>
+    <div class="tiny-box">
+        {{ form_row(print_article.description) }}
+    </div>
     {{ form_widget(print_article._token) }}
 
+<div class="btn-push">
 {{ form_end(print_article) }}
-
+</div>
     <div class="container">
         <div class="row">
             <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
@@ -31,6 +33,6 @@
     </div>
     {# {{ form_end(form) }} #}
     {# {{ form_end(print_article) }} #}
-
+    </div>
 </div>
 {% endblock %}
