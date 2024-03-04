@@ -1,21 +1,25 @@
 {% extends 'layouts/layout-full-width.html.twig' %}
 
-{% block title %}Article|{% endblock %}
+{% block title %}article | home{% endblock %}
 
 {% block actionBar %}
-
+<div class="container mb-4">
+    <div class="structural-row-center-end">
+        <a href="{{ path('app_article_create') }}">
+            <button class="btn btn-lg btn-outline-danger">AJOUTER</button>
+        </a>
+    </div>
+</div> 
 {% endblock %}
 
 {% block contentFullWidth %}
 {{ include('template-parts/general-notifs.html.twig') }}
-    
-    <h1>Liste des Articles</h1>
+<div class="container">
+    <h1>Liste des tâches</h1>
     <div class="row">
         {% for article in articles %}
             <div class="col-md-4 mb-4"> 
                 <div class="card" style="width: 100%;">
-                <div class="article">
-                <div class="wrapper-article">
                     <div class="card-body">
                         <h5 class="card-title">{{ article.name }}</h5>
                         <p class="card-text description">{{ article.description | raw }}</p>
@@ -29,7 +33,6 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
     </div>
 </div>
 
