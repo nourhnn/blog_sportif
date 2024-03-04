@@ -16,4 +16,9 @@ class UserService {
 
         return $this->doctrine->getManager()->getRepository(User::class)->findOneBy(['email'=>$email]); 
     }
+
+    public function adminAccess(int $id) {
+        $user = $this->doctrine->getManager()->getRepository(User::class)->findOneBy(['id'=>$id]); 
+        // dd($user);
+    }
 }

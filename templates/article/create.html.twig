@@ -21,7 +21,8 @@
     {{ form_row(print_article.name) }}
     {{ form_row(print_article.description) }}
     {# {{ form_widget(print_article._token) }} #}
-{{ descriptionPlainText }}
+    {# {{ descriptionPlainText }} #}
+    {# <p> {{dump(app.user.roles) }} </p> #}
 {{ form_end(print_article) }}
 
     <div class="container">
@@ -29,8 +30,5 @@
             <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
         </div>
     </div>
-    {# {{ form_end(form) }} #}
-    {# {{ form_end(print_article) }} #}
-
 </div>
 {% endblock %}
