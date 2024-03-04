@@ -6,6 +6,8 @@ use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Html2Text\Html2Text;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\DBAL\Types\Types;
+
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -18,8 +20,9 @@ class Article
     #[ORM\Column(length: 80)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'text')]
     private ?string $description = null;
+    
 
     #[ORM\Column]
     private ?int $ref = null;
