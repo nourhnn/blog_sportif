@@ -27,6 +27,10 @@ class ArticleController extends AbstractController
     
     public function articleCreate(Request $request, AuthenticationUtils $authenticationUtils, UserService $userService, ManagerRegistry $doctrine): Response
     {
+        if (!$this->getUser()) {
+            $this->addFlash('error', 'Vous devez être connecté pour publiez un article.');
+            return $this->redirectToRoute('app_login'); // Rediriger vers la page de connexion
+        }
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -36,17 +40,29 @@ class ArticleController extends AbstractController
         $userService->getAllUserElement($lastUsername);
         $user = $userService->getAllUserElement($lastUsername);
         $userId = null;
-        if ($user !== null) {
-            $userId = $user->getId();
-        }
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             // Récupérer les données du formulaire
-            $article = $form->getData();
-            $article->articleId($userId, $doctrine); 
+            if ($user !== null) {
+                $userId = $user->getId();
             
+                // dd($userId);
+                // if($userId!== null){
+                //     $article->setRef($userId);
+                // }
+                // elseif($userId === null){
+                //     return $this->redirectToRoute('app_login');
+                // }
+                try{
+                    $article->setRef($userId);
+                }
+                catch(\Exception $e){
+                    return $this->redirectToRoute('app_login');
+                }
+                $article = $form->getData();
+                $article->articleId($userId, $doctrine); 
+            }
             // Récupérer la description de l'article du formulaire
-            $article->setRef($userId);
         
             // Persistez l'article dans la base de données
             $entityManager = $doctrine->getManager();
@@ -66,7 +82,7 @@ class ArticleController extends AbstractController
         // Vérifier si l'utilisateur est connecté
         if (!$this->getUser()) {
             $this->addFlash('error', 'Vous devez être connecté pour supprimer un article.');
-            return $this->redirectToRoute('app_register'); // Rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login'); // Rediriger vers la page de connexion
         }
     
         $article = $articleService->getOnearticle($id);
@@ -94,7 +110,7 @@ class ArticleController extends AbstractController
         // Vérifier si l'utilisateur est connecté
         if (!$this->getUser()) {
             $this->addFlash('error', 'Vous devez être connecté pour modifier un article.');
-            return $this->redirectToRoute('app_register'); // Rediriger vers la page de connexion
+            return $this->redirectToRoute('app_login'); // Rediriger vers la page de connexion
         }
     
         $article = $articleService->getOnearticle($id);
@@ -103,7 +119,9 @@ class ArticleController extends AbstractController
         $currentUser = $this->getUser();
         if ($currentUser !== null && $article->getRef() !== $currentUser->getId()) {
             // Si l'utilisateur n'est pas le propriétaire de l'article, afficher un message d'erreur
-            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à modifier cet article.');
+            // throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à modifier cet article.');
+            $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier cet article.');
+            return $this->redirectToRoute('app_article');
         }
     
         $form = $this->createForm(ArticleType::class, $article, ['method' => 'POST']);

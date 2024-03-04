@@ -2,34 +2,23 @@
 
 {% block title %}Article|Create{% endblock %}
 
-
-{% block actionBar %}
-<div class="container mb-4">
-    <div class="structural-row-center-end">
-        <a href="{{ path('app_article') }}">
-            <button class="btn btn-lg btn-outline-info">LISTE</button>
-        </a>
-    </div>
-  </div> 
-{% endblock %}
-
+    ²²²²
 
 {% block contentFullWidth %}
-<div>
-    <h1>Article Form</h1>
+<div class="create">
+    <div class="wrapper-create">
+    <h1>Rédigez votre article</h1>
     {{ form_start(form) }}
     {{ form_errors(form) }}
     <div class="container">
         <div class="row">
-            <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
-            <div class="col-sm-6 ms-3">
             {{ form_row(form.name) }}
             {{ form_row(form.description) }}
-
             {{ form_row(form.Publier) }}
             </div>
         </div>
     </div>
     {{ form_end(form) }}
+    </div>
 </div>
 {% endblock %}

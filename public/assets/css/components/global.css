@@ -13,6 +13,11 @@ body{
   min-height: 100vh;
 }
 
+#container{
+  display: grid;
+  overflow: hidden;
+}
+
 .alert{
   color: #fff;
 }
