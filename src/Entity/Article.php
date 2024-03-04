@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Html2Text\Html2Text;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -68,5 +69,11 @@ class Article
     {
         $html2text = new Html2Text($this->description);
         return $html2text->getText();
+    }
+    public function articleId(int $id, ManagerRegistry $doctrine)
+    {
+        $entityManager = $doctrine->getManager();
+        $test = $entityManager->getRepository(Article::class)->findOneBy(['ref' => $id]);
+        // Vous pouvez effectuer d'autres opérations avec $test si nécessaire
     }
 }
