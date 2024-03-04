@@ -16,6 +16,8 @@ body{
 #container{
   display: grid;
   overflow: hidden;
+  background: url('../../img/background.jpg');
+  background-repeat: repeat;
 }
 
 .alert{

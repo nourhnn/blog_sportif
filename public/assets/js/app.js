@@ -14,4 +14,3 @@ function ready(callback) {
 ready(function () {
   // votre code JS ici....
 });
-
