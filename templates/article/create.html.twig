@@ -15,15 +15,10 @@
 {{ form_start(print_article, {'attr': {'novalidate': ''}}) }}
 
     {{ form_errors(print_article) }}
-    <div class="title-box">
-        {{ form_row(print_article.name) }}
-    </div>
-    <div class="tiny-box">
-        {{ form_row(print_article.description) }}
-    </div>
+    {{ form_row(print_article.name) }}
+    {{ form_row(print_article.description) }}
     {{ form_widget(print_article._token) }}
 
-<div class="btn-push">
 {{ form_end(print_article) }}
 </div>
     <div class="container">
@@ -33,6 +28,6 @@
     </div>
     {# {{ form_end(form) }} #}
     {# {{ form_end(print_article) }} #}
-    </div>
+
 </div>
 {% endblock %}

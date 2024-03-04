@@ -4,6 +4,9 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\DBAL\Types\Types;
+
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -16,8 +19,9 @@ class Article
     #[ORM\Column(length: 80)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'text')]
     private ?string $description = null;
+    
 
     #[ORM\Column]
     private ?int $ref = null;
@@ -61,5 +65,12 @@ class Article
         $this->ref = $ref;
 
         return $this;
+    }
+    
+    public function articleId(int $id, ManagerRegistry $doctrine)
+    {
+        $entityManager = $doctrine->getManager();
+        $test = $entityManager->getRepository(Article::class)->findOneBy(['ref' => $id]);
+        // Vous pouvez effectuer d'autres opérations avec $test si nécessaire
     }
 }

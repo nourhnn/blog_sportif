@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
+// lpp
 class ArticleController extends AbstractController
 {
     #[Route('/article', name: 'app_article')]
@@ -25,13 +25,13 @@ class ArticleController extends AbstractController
     }
     
     #[Route('/article/create', name: 'app_article_create')]
+    
     public function articleCreate(Request $request, AuthenticationUtils $authenticationUtils, UserService $userService, ManagerRegistry $doctrine): Response
     {
         $article = new Article();
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-    
         $lastUsername = $authenticationUtils->getLastUsername();
         
         $userService->getAllUserElement($lastUsername);
@@ -42,43 +42,75 @@ class ArticleController extends AbstractController
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // on met a jour l'objet $article avec les données du formulaire
+            // Récupérer les données du formulaire
             $article = $form->getData();
-            // Mettre l'ID de l'utilisateur dans le champ ref de la table article
+            $article->articleId($userId, $doctrine); 
+            
+            // Récupérer la description de l'article du formulaire
             $article->setRef($userId);
-            // Persistez l'article dans la base de données
-            $doctrine->getManager()->persist($article);
-            $doctrine->getManager()->flush();
         
-            $this->addFlash('success', 'article envoyé avec succés.');
+            // Persistez l'article dans la base de données
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+        
+            $this->addFlash('success', 'article envoyé avec succès.');
         }
         
         return $this->render('article/create.html.twig', [
             'print_article' => $form,
         ]);
     }
-
     #[Route('/article/delete/{id}', name: 'app_article_delete')]
-    public function deleteArticle(int $id, ArticleService $articleService): RedirectResponse
+    public function deleteArticle(int $id, ArticleService $articleService, Request $request): RedirectResponse
     {
+        // Vérifier si l'utilisateur est connecté
+        if (!$this->getUser()) {
+            $this->addFlash('error', 'Vous devez être connecté pour supprimer un article.');
+            return $this->redirectToRoute('app_register'); // Rediriger vers la page de connexion
+        }
+    
+        $article = $articleService->getOnearticle($id);
+    
+        // // Vérifier si l'utilisateur actuellement authentifié est le propriétaire de l'article
+        $currentUser = $this->getUser();
+        if ($currentUser !== null && $article->getRef() !== $currentUser->getId()) {
+            // Si l'utilisateur n'est pas le propriétaire de l'article, afficher un message d'erreur
+            $this->addFlash('error', 'Vous n\'êtes pas autorisé à supprimer cet article.');
+            return $this->redirectToRoute('app_article'); // Rediriger vers la page d'articles
+        }
+    
+        // Supprimer l'article
         if ($articleService->deleteOneArticle($id)) {
             $this->addFlash('success', 'L\'article a été supprimé.');
         } else {
             $this->addFlash('error', 'Une erreur est survenue lors de la suppression de l\'article.');
         }
+    
         return $this->redirectToRoute('app_article');
     }
     #[Route('/article/update/{id}', name: 'app_article_update')]
-
     public function updatearticle(int $id, ArticleService $articleService, Request $request, ManagerRegistry $doctrine): Response
     {
+        // Vérifier si l'utilisateur est connecté
+        if (!$this->getUser()) {
+            $this->addFlash('error', 'Vous devez être connecté pour modifier un article.');
+            return $this->redirectToRoute('app_register'); // Rediriger vers la page de connexion
+        }
+    
         $article = $articleService->getOnearticle($id);
+    
+        // Vérifier si l'utilisateur actuellement authentifié est le propriétaire de l'article
+        $currentUser = $this->getUser();
+        if ($currentUser !== null && $article->getRef() !== $currentUser->getId()) {
+            // Si l'utilisateur n'est pas le propriétaire de l'article, afficher un message d'erreur
+            throw $this->createAccessDeniedException('Vous n\'êtes pas autorisé à modifier cet article.');
+        }
     
         $form = $this->createForm(ArticleType::class, $article, ['method' => 'POST']);
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
-    
             $entityManager = $doctrine->getManager();
             $entityManager->flush();
     
@@ -89,5 +121,7 @@ class ArticleController extends AbstractController
             'form' => $form->createView(),
             'article' => $article,
         ]);
-    }    
+    }
+    
+    
 }
