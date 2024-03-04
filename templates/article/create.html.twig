@@ -9,23 +9,25 @@
 {% endblock %}
 
 {% block contentFullWidth %}
-    <h1>Rédigez votre article</h1>
-{{ form_start(print_article, {'attr': {'novalidate': ''}}) }}
+<div class="create">
+    <div class="wrapper-create">
+            <h1>Rédigez votre article</h1>
+        {{ form_start(print_article, {'attr': {'novalidate': ''}}) }}
 
-    {{ form_errors(print_article) }}
-    {{ form_row(print_article.name) }}
-    {{ form_row(print_article.description) }}
-    {{ form_widget(print_article._token) }}
+            {{ form_errors(print_article) }}
+            {{ form_row(print_article.name) }}
+            {{ form_row(print_article.description) }}
+            {{ form_widget(print_article._token) }}
 
-{{ form_end(print_article) }}
-</div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
-        </div>
+        {{ form_end(print_article) }}
+        
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5 d-flex justify-content-center align-items-stretch border border-top-0 border-left-0 border-bottom-0">
+                </div>
+            </div>
+            {# {{ form_end(form) }} #}
+            {# {{ form_end(print_article) }} #}
     </div>
-    {# {{ form_end(form) }} #}
-    {# {{ form_end(print_article) }} #}
-
 </div>
 {% endblock %}
